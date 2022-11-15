@@ -1,7 +1,7 @@
 {
   "name": "@byron-react-native/image-blur",
   "title": "React Native Image Blur",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "React Native Image Blur",
   "main": "index.js",
   "files": [
