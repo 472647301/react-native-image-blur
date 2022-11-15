@@ -48,7 +48,13 @@ public class ImageBlurModule extends ReactContextBaseJavaModule {
         }
         BitmapFactory.Options options = new BitmapFactory.Options();
         Bitmap bitmap = BitmapFactory.decodeStream(fis,null, options);
-        Bitmap blurImage = StackBlur.blurNatively(bitmap, radius, true);
+        Bitmap blurImage = null;
+        try {
+            blurImage = StackBlur.blurNatively(bitmap, radius, true);
+        } catch (Exception e) {
+            e.printStackTrace();
+            promise.reject("404", "404");
+        }
         FileOutputStream saveImgOut = null;
         try {
             saveImgOut = new FileOutputStream(file);
@@ -56,7 +62,9 @@ public class ImageBlurModule extends ReactContextBaseJavaModule {
             e.printStackTrace();
             promise.reject("404", "404");
         }
-        blurImage.compress(Bitmap.CompressFormat.PNG, 80, saveImgOut);
+        if (blurImage != null) {
+            blurImage.compress(Bitmap.CompressFormat.PNG, 80, saveImgOut);
+        }
         if (saveImgOut != null) {
             try {
                 saveImgOut.flush();
